@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport"  content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <title>Video Editor</title>
+    <link rel="stylesheet" type="text/css" href="./src/css/index.css">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+
+    <div class="viewport" id="J_viewport">
+
+        <div class="video-bar clearfix">
+            <div class="preview-video">
+                <video id="J_preview-video" class="video-js"
+                       controls preload="auto"
+                       width="500" height="311"
+                       poster="./src/images/default.png"
+                       data-setup="{}" >
+
+                    <!--A fixed mp4 video, which is not a frame-->
+                    <source src="./src/Cat-cartoon.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="editor-operation-box">
+                <span class="editor-p-btn" id="J_revoked">撤销 (返回上一步)</span>
+                <span class="editor-p-btn" id="J_reload">恢复原始视频</span>
+                <span class="editor-p-btn" id="J_save">保存 (合并片段)</span>
+            </div>
+
+        </div>
+
+        <div class="editor-bar">
+            <div class="editor-handler-box clearfix" id="J_editor-handler-box">
+
+                <div class="editor-playline" id="J_editor-playline">
+                    <div class="editor-playline-line" id="J_editor-playline-line"></div>
+                    <div class="editor-playline-clip" id="J_editor-playline-clip"></div>
+                    <span class="editor-playline-time" id="J_editor-playline-time">00:00</span>
+                </div>
+
+                <ul class="editor-timeline" id="J_editor-timeline">
+                    <li v-for="(fgItem, index) in clipFragments" :data-st="fgItem.st" :data-et="fgItem.et" :data-spt="fgItem.spt">
+                        <div class="editor-img-fragment">
+                            <img :src="fgItem.img">
+                            <span class="editor-thumb-time">{{ fgItem.spt | toPreTime }}</span>
+                            <em class="editor-detele-btn" :data-index="index"><i></i></em>
+                        </div>
+                        <div class="editor-timeLine-fragment">
+                            <span class="editor-time-fragment e-starttime">{{ fgItem.st | toPreTime }}</span>
+                            <span class="editor-time-fragment e-endtime">{{ fgItem.et | toPreTime }}</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="ghost-video-clip"></div>
+            </div>
+        </div>
+
+    </div>
+
+<!--JAVASCRIPT-->
+<script src="./src/js/module/video.min.js"></script>
+<script src="./src/js/common.min.js"></script>
+<script src="./src/js/videoclip.min.js"></script>
+</body>
+</html>
